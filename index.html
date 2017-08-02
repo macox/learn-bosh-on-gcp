@@ -17,8 +17,8 @@
           navigationPosition: 'right',
           scrollOverflow: true,
           css3: false,
-          anchors: ["introduction", "prepare", "setup_bosh_environment", "log_in", "deploy", "create_release", "upload_stemcell", "run_deploy", "modify", "modify_release", "scale", "change_properties", "when_something_goes_wrong", "failing_service", "failing_vm", "failing_deploy", "done"],
-          navigationTooltips: ["Introduction", "Prepare", "Setup BOSH environment", "Log in", "Deploy", "Create release", "Upload stemcell", "Run deploy", "Modify deployment", "Modify release", "Scale", "Change properties", "When something goes wrong", "Failing service", "Failing VM", "Failing deploy", "Done!"],
+          anchors: ["introduction", "prepare", "create_bosh_bastion", "create_bosh_director", "log_in", "deploy", "create_release", "upload_stemcell", "run_deploy", "modify", "modify_release", "scale", "change_properties", "when_something_goes_wrong", "failing_service", "failing_vm", "failing_deploy", "done"],
+          navigationTooltips: ["Introduction", "Prepare", "Create BOSH Bastion", "Create BOSH Director", "Log in", "Deploy", "Create release", "Upload stemcell", "Run deploy", "Modify deployment", "Modify release", "Scale", "Change properties", "When something goes wrong", "Failing service", "Failing VM", "Failing deploy", "Done!"],
         });
     });
   </script>
@@ -28,26 +28,38 @@
 <body>
   <div id="fullpage">
     
-    <div class="section intro"><div class="center-column"><h2>A guide to using</h2>
-<h1>BOSH</h1>
+    <div class="section intro"><div class="center-column"><h2>A Guide to Using</h2>
+<h1>BOSH on GCP</h1>
 
-<p>This tutorial gives a simple introduction to BOSH. If you never deployed with BOSH or never heard about it this step-by-step guide will bring you up to speed.</p>
+<p>This tutorial aims to give a <i>relatively</i> simple introduction to using BOSH on Google Cloud Platform (GCP).</p>
+
+<p>It is <b>heavily</b> based on the excellent <a href="http://mariash.github.io/learn-bosh/">A Guide to Using BOSH</a> tutorial, written by <a href="https://github.com/mariash">Maria Shaldibina</a>.</p>
+
+<p>Prerequisites:
+<ul>
+  <li>A GCP account (at the time of writing a <a href="https://cloud.google.com/free/">Free Tier</a> is available)</li>
+</ul>
+</p>
 
 <p>Learn more: 
 <ul>
-<li><a href="http://bosh.io/docs/about.html">bosh.io: What is BOSH?</a></li>
-<li><a href="http://bosh.io/docs/problems.html">bosh.io: What Problems Does BOSH Solve?</a></li>
+  <li><a href="https://cloud.google.com/getting-started/">cloud.google.com: Getting Started with Google Cloud Platform</a></li>
+  <li><a href="http://bosh.io/docs/about.html">bosh.io: What is BOSH?</a></li>
+  <li><a href="http://bosh.io/docs/problems.html">bosh.io: What Problems Does BOSH Solve?</a></li>
+</ul>
 </p>
 
-<button onClick="$.fn.fullpage.moveSectionDown();" id="start-button">Start</button></div></div>
+<button onClick="$.fn.fullpage.moveSectionDown();" id="start-button">Start</button>
+</div></div>
     
     <div class="section prepare"><div class="center-column"><h1>Prepare</h1>
 
-<p>We are going to use local BOSH environment provided by VirtualBox (known working version 5.1+). We will install BOSH server (<b>Director</b>) using BOSH CLI. Once VM with <b>Director</b> is running we are going to use BOSH CLI to send commands to the <b>Director</b>.</p>
+<p>We are going to use the BOSH Environment created using the scripts in the <a href="https://github.com/rigoford/bosh-on-gcp">bosh-on-gcp</a> repository. First we will create a BOSH Bastion in a dedicated GCP Project. The BOSH Bastion will have the BOSH CLI v2 installed, it is from this BOSH Bastion that we will create a BOSH Director. Once the BOSH Director is running we will use the BOSH CLI on the BOSH Bastion to send commands to the BOSH Director.</p>
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/bosh-components.html">bosh.io: Components</a></li>
+  <li><a href="http://bosh.io/docs/bosh-components.html">bosh.io: Components</a></li>
+</ul>
 </p>
 
 <button onClick="$.fn.fullpage.moveSectionDown();" id="next-button">Next</button>
@@ -60,7 +72,41 @@
     </div>
   </div>
   <div class="view-heading-text-container">
-    <h2>Setup BOSH environment</h2>
+    <h2>Create BOSH Bastion</h2>
+  </div>
+</div> 
+
+<p>The BOSH Bastion is the <i>jumpbox</i> we will use to access the BOSH Director, and the BOSH Environment in general. It is created using the Google Cloud SDK.</p>
+
+<p>To install the Google Cloud SDK follow the instructions on the <a href="https://cloud.google.com/sdk/">Cloud SDK</a> page.</p>
+
+<p>Once the Cloud SDK is installed, initialize a gcloud session:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ gcloud init</h4>
+</div>
+
+<p>To create the BOSH Bastion, clone the <a href="https://github.com/rigoford/bosh-on-gcp">bosh-on-gcp</a> repository and execute the <code>create-project.sh</code> script:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ git clone https://github.com/rigoford/bosh-on-gcp</h4>
+  <h4 class="terminal-code-text">$ cd bosh-on-gcp</h4>
+  <h4 class="terminal-code-text">$ ./create-project.sh &lt;GCP_PROJECT&gt;</h4>
+</div>
+
+<p>Learn more:
+<ul>
+  <li><a href="https://cloud.google.com/sdk/docs/">cloud.google.com: Cloud SDK</a></li>
+</ul>
+</p>
+</div></div>
+    
+    <div class="section prepare"><div class="center-column"><div class="view-heading">
+  <div class="circle-container">
+    <div class="circle-number">
+      <h2>1</h2>
+    </div>
+  </div>
+  <div class="view-heading-text-container">
+    <h2>Create BOSH Director</h2>
   </div>
 </div> 
 
