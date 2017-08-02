@@ -1,0 +1,27 @@
+<%= circled_title(1, "Failing service") %>
+
+<p>BOSH is using <a href="https://mmonit.com/monit/">monit</a> to monitor running services. If the service goes down it will bring it up. Let's watch how this works. SSH to one of instances:</p>
+
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ bosh -e vbox -d learn-bosh ssh app/0</h4>
+  <h4 class="terminal-code-text">$ sudo -i</h4>
+  <h4 class="terminal-code-text"># watch monit summary</h4>
+  <h4 class="terminal-printout-text">The Monit daemon 5.2.5 uptime: 2m
+
+Process 'app'                       running
+System 'system_localhost'           running
+</h4>
+</div>
+
+<p>In a separate window (on host) let's kill our runnning server:</p>
+
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ curl 10.244.0.2:8888/kill</h4>
+</div>
+
+<p>Back in the instance window notice that monit will report process as 'Does not exist' and after some period service will be brought back up by monit again.</p>
+
+<p>Learn more:
+<ul>
+<li><a href="http://bosh.io/docs/vm-monit.html">bosh.io: Process monitoring with Monit</a></li>
+</p>
