@@ -1,0 +1,31 @@
+{
+  "intro" : {
+    "introduction" : "Introduction"
+  },
+  "prepare" : {
+    "prepare" : "Prepare",
+    "setup_bosh_environment": "Setup BOSH environment",
+    "log_in": "Log in"
+  },
+  "deploy" : {
+    "deploy" : "Deploy",
+    "create_release" : "Create release",
+    "upload_stemcell" : "Upload stemcell",
+    "run_deploy": "Run deploy"
+  },
+  "modify" : {
+    "modify": "Modify deployment",
+    "modify_release": "Modify release",
+    "scale": "Scale",
+    "change_properties": "Change properties"
+  },
+  "recover" : {
+    "when_something_goes_wrong" : "When something goes wrong",
+    "failing_service": "Failing service",
+    "failing_vm": "Failing VM",
+    "failing_deploy": "Failing deploy"
+  },
+  "last" : {
+    "done" : "Done!"
+  }
+}
