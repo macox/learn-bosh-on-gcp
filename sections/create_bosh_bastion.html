@@ -1,23 +1,24 @@
 <%= circled_title(1, "Create BOSH Bastion") %>
 
-<p>The BOSH Bastion is the <i>jumpbox</i> we will use to access the BOSH Director, and the BOSH Environment in general. It is created using the Google Cloud SDK.</p>
-
-<p>To install the Google Cloud SDK follow the instructions on the <a href="https://cloud.google.com/sdk/">Cloud SDK</a> page.</p>
+<p>The BOSH Bastion is the <i>jumpbox</i> we will use to access the BOSH Director, and the BOSH Environment in general. It is created using the Google Cloud SDK and <a href="https://www.terraform.io/">Terraform</a>. To install the Google Cloud SDK follow the instructions on the <a href="https://cloud.google.com/sdk/">Cloud SDK</a> page.</p>
 
 <p>Once the Cloud SDK is installed, initialize a gcloud session:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ gcloud init</h4>
 </div>
 
-<p>To create the BOSH Bastion, clone the <a href="https://github.com/rigoford/bosh-on-gcp">bosh-on-gcp</a> repository and execute the <code>create-project.sh</code> script:</p>
+<p>To create a GCP Project and BOSH Bastion, clone the <a href="https://github.com/rigoford/bosh-on-gcp">bosh-on-gcp</a> repository and execute the <code>create-project.sh</code> <code>build-bosh-resources.sh</code> scripts:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ git clone https://github.com/rigoford/bosh-on-gcp</h4>
   <h4 class="terminal-code-text">$ cd bosh-on-gcp</h4>
   <h4 class="terminal-code-text">$ ./create-project.sh &lt;GCP_PROJECT&gt;</h4>
+  <h4 class="terminal-code-text">$ cd terraform</h4>
+  <h4 class="terminal-code-text">$ ./build-bosh-resources.sh &lt;GCP_PROJECT&gt;</h4>
 </div>
 
 <p>Learn more:
 <ul>
   <li><a href="https://cloud.google.com/sdk/docs/">cloud.google.com: Cloud SDK</a></li>
+  <li><a href="https://www.terraform.io/docs/index.html">terraform.io: Terraform Documentation</a></li>
 </ul>
 </p>
