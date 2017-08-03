@@ -7,7 +7,7 @@
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh int vbox/creds.yml --path /jumpbox_ssh/private_key > jumpbox.key</h4>
   <h4 class="terminal-code-text">$ chmod 600 jumpbox.key</h4>
-  <h4 class="terminal-code-text">$ ssh jumpbox@192.168.50.6 -i jumpbox.key</h4>
+  <h4 class="terminal-code-text">$ ssh jumpbox@10.0.0.6 -i jumpbox.key</h4>
 </div>
 
 <p>Our VirtualBox environment is using <b>Warden</b> to manage resources. Warden is a Linux container management tool. Each container represents one instance. On VirtualBox VM kill one of Warden containers.</p>
