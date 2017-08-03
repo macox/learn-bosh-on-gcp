@@ -4,7 +4,8 @@
   },
   "prepare" : {
     "prepare" : "Prepare",
-    "setup_bosh_environment": "Setup BOSH environment",
+    "create_bosh_bastion": "Create BOSH Bastion",
+    "create_bosh_director": "Create BOSH Director",
     "log_in": "Log in"
   },
   "deploy" : {
