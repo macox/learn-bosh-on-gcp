@@ -1,6 +1,6 @@
 # A Guide to Using BOSH on GCP
 
-This is the source for the Using BOSH on GCP guide - http://rigoford.github.io/learn-bosh-on-gcp/.
+This is the source for the Using BOSH on GCP guide - http://finkit.github.io/learn-bosh-on-gcp/.
 
 It is *heavily* based on the excellent [A Guide to Using BOSH](http://mariash.github.io/learn-bosh/) tutorial, written by [Maria Shaldibina](https://github.com/mariash).
 
