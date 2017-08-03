@@ -1,10 +1,13 @@
 <%= circled_title(2, "Log in") %>
 
-<p>Once VM with BOSH <b>Director</b> is running, point your CLI to it, saving the environment with the alias <b>vbox</b>:</p>
+<p>Once VM with BOSH <b>Director</b> is running, point your CLI to it, configure a number of environment variables to make it easier to interact with it</p>
 
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)</h4>
-  <h4 class="terminal-printout-text">Using environment '192.168.50.6' as anonymous user
+  <h4 class="terminal-code-text">$ bosh -e 10.0.0.6 alias-env gcp --ca-cert <(bosh int gcp/creds.yml --path /director_ssl/ca)</h4>
+  <h4 class="terminal-code-text">$ export BOSH_CLIENT=admin</h4>
+  <h4 class="terminal-code-text">$ export BOSH_CLIENT_SECRET=`bosh int gcp/creds.yml --path /admin_password`</h4>
+  <h4 class="terminal-code-text">$ export BOSH_ENVIRONMENT=gcp</h4>
+  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as anonymous user
 
 Name      Bosh Lite Director
 UUID      ...
@@ -28,7 +31,7 @@ Succeeded</h4>
 <p>Log in using <b>admin</b> username and generated password:</p>
 
 <div class="terminal-block">
-<h4 class="terminal-code-text">$ bosh -e vbox login</h4>
+<h4 class="terminal-code-text">$ bosh login</h4>
 </div>
 
 <p>Now we are ready to deploy!</p>

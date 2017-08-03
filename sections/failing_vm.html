@@ -7,7 +7,7 @@
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh int vbox/creds.yml --path /jumpbox_ssh/private_key > jumpbox.key</h4>
   <h4 class="terminal-code-text">$ chmod 600 jumpbox.key</h4>
-  <h4 class="terminal-code-text">$ ssh jumpbox@192.168.50.6 -i jumpbox.key</h4>
+  <h4 class="terminal-code-text">$ ssh jumpbox@10.0.0.6 -i jumpbox.key</h4>
 </div>
 
 <p>Our VirtualBox environment is using <b>Warden</b> to manage resources. Warden is a Linux container management tool. Each container represents one instance. On VirtualBox VM kill one of Warden containers.</p>
@@ -21,7 +21,7 @@
 <p>Let's see that one of the instances is in a bad state:</p>
 
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ bosh -e vbox instances</h4>
+  <h4 class="terminal-code-text">$ bosh instances</h4>
   <h4 class="terminal-printout-text">...
 Instance    Process State       IPs
 app/guid-1  running             10.244.0.6
@@ -29,21 +29,21 @@ app/guid-2  unresponsive agent  10.244.0.2
 ...</h4>
 </div>
 
-<p>One of the components in BOSH is the Health Monitor. It independently watches system health and will bring missing instances back up by instructing infrastructure to recreate missing resources like VMs with the required persistent disk. Keep running <b>bosh -e vbox instances</b> and see that instance is brought up and service is running eventually.</p>
+<p>One of the components in BOSH is the Health Monitor. It independently watches system health and will bring missing instances back up by instructing infrastructure to recreate missing resources like VMs with the required persistent disk. Keep running <b>bosh instances</b> and see that instance is brought up and service is running eventually.</p>
 
 <p>Now let's turn off automatic repair and manually resolve the issue.</p>
 
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ bosh -e vbox update-resurrection off</h4>
+  <h4 class="terminal-code-text">$ bosh update-resurrection off</h4>
 </div>
 
 <p>Kill one of the containers again as described above. Run cloud check and select option "Recreate VM and wait for processes to start".</p>
 
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ bosh -e vbox -d learn-bosh cloud-check</h4>
+  <h4 class="terminal-code-text">$ bosh -d learn-bosh-on-gcp cloud-check</h4>
 </div>
 
-<p>Cloud check command allows to manually resolve issues when resources (VMs and persistent disks) are in a bad state. Run <b>bosh -e vbox instances</b> to see all instances running again.</p>
+<p>Cloud check command allows to manually resolve issues when resources (VMs and persistent disks) are in a bad state. Run <b>bosh instances</b> to see all instances running again.</p>
 
 <p>Learn more:
 <ul>
