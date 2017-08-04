@@ -1,33 +1,15 @@
-<%= circled_title(1, "Create BOSH Director") %>
+<%= circled_title(2, "Create BOSH Director") %>
 
-<p>BOSH CLI is a command line interface to the <b>Director</b>. Follow these <a href="https://bosh.io/docs/cli-v2#install">instructions</a> to install it.</p>
-
-<p>We are going to use <b>bosh create-env</b> command to install BOSH <b>Director</b>. <b>bosh create-env</b> command provides a way to install initial VM with BOSH <b>Director</b> on any IaaS (AWS, GCP, etc). In our case we will use VirtualBox as our infrastructure provider.</p>
-
-<p>First get configuration files that specify BOSH environment in VirtualBox. And run <b>bosh create-env</b> as following:</p>
-
+<p>To create the BOSH Director, ssh into the BOSH Bastion VM and execute the <code>create-bosh-director.sh</code> script:</p>
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment</h4>
-  <h4 class="terminal-code-text">$ mkdir gcp</h4>
-  <h4 class="terminal-code-text">$ bosh create-env bosh-deployment/bosh.yml \<br>
-  --state gcp/state.json \<br>
-  -o bosh-deployment/gcp/cpi.yml \<br>
-  --vars-store gcp/creds.yml \<br>
-  -v director_name=gcp \<br>
-  -v internal_ip=10.0.0.6 \<br>
-  -v internal_gw=10.0.0.1 \<br>
-  -v internal_cidr=10.0.0.0/24 \<br>
-  --var-file gcp_credentials_json=${service_account_email}.key.json \<br>
-  -v project_id=${project_id} \<br>
-  -v zone=europe-west1-b \<br>
-  -v tags=[internal,no-ip] \<br>
-  -v network=bosh \<br>
-  -v subnetwork=bosh-europe-west1</h4>
+  <h4 class="terminal-code-text">$ gcloud compute ssh bosh-bastion</h4>
+  <h4 class="terminal-code-text">$ ./create-bosh-director.sh</h4>
 </div>
 
-<p>In case of any issues see <a href="https://github.com/cloudfoundry/bosh-deployment/blob/master/docs/bosh-lite-on-vbox.md">bosh-deployment VirtualBox docs</a>.</p>
+<p>In case of any issues see <a href="https://github.com/finkit/bosh-on-gcp/terraform/README.md">bosh-on-gcp create BOSH Director docs</a>.</p>
 
 <p>Learn more:
 <ul>
-<li><a href="https://bosh.io/docs/cli-v2.html#create-env">bosh.io: bosh create-env</a></li>
+  <li><a href="https://bosh.io/docs/cli-v2.html#create-env">bosh.io: bosh create-env</a></li>
+</ul>
 </p>
