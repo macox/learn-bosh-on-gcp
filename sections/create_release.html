@@ -1,14 +1,13 @@
 <%= circled_title(1, "Create BOSH release") %>
 
 <p>We are going to use a simple BOSH release that deploys an http server.</p>
-
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ git clone https://github.com/finkit/learn-bosh-on-gcp-release</h4>
   <h4 class="terminal-code-text">$ cd learn-bosh-on-gcp-release</h4>
   <h4 class="terminal-code-text">$ bosh create-release</h4>
 </div>
 
-<p>Upload generated release to <b>Director</b>:</p>
+<p>Upload generated release to BOSH Director:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh upload-release</h4>
 </div>
@@ -19,12 +18,13 @@
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
 
 Name               Version  Commit Hash
-learn-bosh-on-gcp  0+dev.1  fd90933
+learn-bosh-on-gcp  0+dev.1  [your commit hash]
 
 1 releases</h4>
 </div>
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/create-release.html">bosh.io: Creating a Release</a></li>
+  <li><a href="http://bosh.io/docs/create-release.html">bosh.io: Creating a Release</a></li>
+</ul>
 </p>

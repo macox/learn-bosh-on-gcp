@@ -1,4 +1,4 @@
-<%= circled_title(2, "Log in") %>
+<%= circled_title(3, "Log in") %>
 
 <p>The final steps of the create-bosh-director.sh script are to create an alias for the BOSH Environment and set the BOSH_ENVIRONMENT, BOSH_CLIENT and BOSH_CLIENT_SECRET environment variables, which make it easier to interact with:</p>
 <div class="terminal-block">
@@ -9,7 +9,7 @@
   <h4 class="terminal-code-text">$ # export BOSH_CLIENT_SECRET=`bosh int ./creds.yml --path /admin_password`</h4>
 </div>
 
-<p>Running bosh env should return details of the BOSH Director:</p>
+<p>Running bosh env should return details of the BOSH Director, similar to:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh env</h4>
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
