@@ -117,7 +117,7 @@
   <h4 class="terminal-code-text">$ ./create-bosh-director.sh</h4>
 </div>
 
-<p>In case of any issues see <a href="https://github.com/finkit/bosh-on-gcp/terraform/README.md">bosh-on-gcp create BOSH Director docs</a>.</p>
+<p>In case of any issues see <a href="https://github.com/finkit/bosh-on-gcp/terraform/README.md">bosh-on-gcp create BOSH Director</a> docs.</p>
 
 <p>Learn more:
 <ul>
@@ -137,41 +137,34 @@
   </div>
 </div> 
 
-<p>Once VM with BOSH <b>Director</b> is running, point your CLI to it, configure a number of environment variables to make it easier to interact with it</p>
-
+<p>The final steps of the create-bosh-director.sh script are to create an alias for the BOSH Environment and set the BOSH_ENVIRONMENT, BOSH_CLIENT and BOSH_CLIENT_SECRET environment variables, which make it easier to interact with:</p>
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ bosh -e 10.0.0.6 alias-env gcp --ca-cert <(bosh int gcp/creds.yml --path /director_ssl/ca)</h4>
-  <h4 class="terminal-code-text">$ export BOSH_CLIENT=admin</h4>
-  <h4 class="terminal-code-text">$ export BOSH_CLIENT_SECRET=`bosh int gcp/creds.yml --path /admin_password`</h4>
-  <h4 class="terminal-code-text">$ export BOSH_ENVIRONMENT=gcp</h4>
-  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as anonymous user
+  <h4 class="terminal-code-text">$ # No need to execute the following commands</h4>
+  <h4 class="terminal-code-text">$ # bosh alias-env bosh-director -e 10.0.0.6 --ca-cert <(bosh int ./creds.yml --path /director_ssl/ca)</h4>
+  <h4 class="terminal-code-text">$ # export BOSH_ENVIRONMENT=bosh-director</h4>
+  <h4 class="terminal-code-text">$ # export BOSH_CLIENT=admin</h4>
+  <h4 class="terminal-code-text">$ # export BOSH_CLIENT_SECRET=`bosh int ./creds.yml --path /admin_password`</h4>
+</div>
 
-Name      Bosh Lite Director
-UUID      ...
-Version   261.4.0 (00000000)
-CPI       warden_cpi
+<p>Running bosh env should return details of the BOSH Director:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ bosh env</h4>
+  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
+
+Name      gcpbosh
+UUID      a5c4d96f-6812-4310-a2e6-a890f8d1aaf2
+Version   262.3.0 (00000000)
+CPI       google_cpi
 Features  compiled_package_cache: disabled
           config_server: disabled
           dns: disabled
           snapshots: disabled
-User      (not logged in)
+User      admin
 
 Succeeded</h4>
 </div>
 
-<p>Obtain generated password to BOSH <b>Director</b>:</p>
-
-<div class="terminal-block">
-<h4 class="terminal-code-text">$ bosh int vbox/creds.yml --path /admin_password</h4>
-</div>
-
-<p>Log in using <b>admin</b> username and generated password:</p>
-
-<div class="terminal-block">
-<h4 class="terminal-code-text">$ bosh login</h4>
-</div>
-
-<p>Now we are ready to deploy!</p>
+<p>We are now ready to deploy!</p>
 </div></div>
     
     <div class="section deploy"><div class="center-column"><h1>Deploy</h1>
