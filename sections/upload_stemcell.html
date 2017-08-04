@@ -2,14 +2,12 @@
 
 <p>A Stemcell is an operating system image that BOSH uses to create VMs. Official BOSH stemcells are maintained with security updates at <a href="https://bosh.io">bosh.io</a>.</p>
 
-<p>Upload stemcell to <b>Director</b>.</p>
-
+<p>Upload stemcell to BOSH Director:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh upload-stemcell https://s3.amazonaws.com/bosh-core-stemcells/google/bosh-stemcell-3431.10-google-kvm-ubuntu-trusty-go_agent.tgz</h4>
 </div>
 
-  <p>See uploaded stemcells:</p>
-
+<p>Check uploaded stemcells:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh stemcells</h4>
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
@@ -22,6 +20,7 @@ bosh-warden-google-kvm-ubuntu-trusty-go_agent  [your stemcell version]
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/stemcell.html">bosh.io: What is a Stemcell?</a></li>
-<li><a href="http://bosh.io/stemcells">Full list of available stemcells</a></li>
+  <li><a href="http://bosh.io/docs/stemcell.html">bosh.io: What is a Stemcell?</a></li>
+  <li><a href="http://bosh.io/stemcells">bosh.io: Full list of available stemcells</a></li>
+</ul>
 </p>

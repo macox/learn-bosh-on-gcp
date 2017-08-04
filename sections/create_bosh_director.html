@@ -3,8 +3,12 @@
 <p>To create the BOSH Director, ssh into the BOSH Bastion VM and execute the <code>create-bosh-director.sh</code> script:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ gcloud compute ssh bosh-bastion</h4>
-  <h4 class="terminal-code-text">$ ./create-bosh-director.sh</h4>
+  <h4 class="terminal-code-text">$ . ./create-bosh-director.sh</h4>
 </div>
+
+<p>Note the extra leading '.' in front of the create-bosh-director.sh command, this is intentional and will cause the script to be run in the current shell.</p>
+
+<p>The creation of the BOSH Director will take a few minutes, and you will be prompted to enter the passphrase for the generation of a public/private rsa key pair.</p>
 
 <p>In case of any issues see <a href="https://github.com/finkit/bosh-on-gcp/terraform/README.md">bosh-on-gcp create BOSH Director</a> docs.</p>
 

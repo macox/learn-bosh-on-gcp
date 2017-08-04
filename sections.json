@@ -12,6 +12,7 @@
     "deploy" : "Deploy",
     "create_release" : "Create release",
     "upload_stemcell" : "Upload stemcell",
+    "update_cloud_config" : "Update cloud config",
     "run_deploy": "Run deploy"
   },
   "modify" : {

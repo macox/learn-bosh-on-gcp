@@ -17,8 +17,8 @@
           navigationPosition: 'right',
           scrollOverflow: true,
           css3: false,
-          anchors: ["introduction", "prepare", "create_bosh_bastion", "create_bosh_director", "log_in", "deploy", "create_release", "upload_stemcell", "run_deploy", "modify", "modify_release", "scale", "change_properties", "when_something_goes_wrong", "failing_service", "failing_vm", "failing_deploy", "done"],
-          navigationTooltips: ["Introduction", "Prepare", "Create BOSH Bastion", "Create BOSH Director", "Log in", "Deploy", "Create release", "Upload stemcell", "Run deploy", "Modify deployment", "Modify release", "Scale", "Change properties", "When something goes wrong", "Failing service", "Failing VM", "Failing deploy", "Done!"],
+          anchors: ["introduction", "prepare", "create_bosh_bastion", "create_bosh_director", "log_in", "deploy", "create_release", "upload_stemcell", "update_cloud_config", "run_deploy", "modify", "modify_release", "scale", "change_properties", "when_something_goes_wrong", "failing_service", "failing_vm", "failing_deploy", "done"],
+          navigationTooltips: ["Introduction", "Prepare", "Create BOSH Bastion", "Create BOSH Director", "Log in", "Deploy", "Create release", "Upload stemcell", "Update cloud config", "Run deploy", "Modify deployment", "Modify release", "Scale", "Change properties", "When something goes wrong", "Failing service", "Failing VM", "Failing deploy", "Done!"],
         });
     });
   </script>
@@ -87,9 +87,9 @@
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ git clone https://github.com/finkit/bosh-on-gcp</h4>
   <h4 class="terminal-code-text">$ cd bosh-on-gcp</h4>
-  <h4 class="terminal-code-text">$ ./create-project.sh &lt;GCP_PROJECT&gt;</h4>
+  <h4 class="terminal-code-text">$ ./create-project.sh -p &lt;GCP_PROJECT&gt;</h4>
   <h4 class="terminal-code-text">$ cd terraform</h4>
-  <h4 class="terminal-code-text">$ ./build-bosh-resources.sh &lt;GCP_PROJECT&gt;</h4>
+  <h4 class="terminal-code-text">$ ./build-bosh-resources.sh -p &lt;GCP_PROJECT&gt;</h4>
 </div>
 
 <p>Learn more:
@@ -114,8 +114,12 @@
 <p>To create the BOSH Director, ssh into the BOSH Bastion VM and execute the <code>create-bosh-director.sh</code> script:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ gcloud compute ssh bosh-bastion</h4>
-  <h4 class="terminal-code-text">$ ./create-bosh-director.sh</h4>
+  <h4 class="terminal-code-text">$ . ./create-bosh-director.sh</h4>
 </div>
+
+<p>Note the extra leading '.' in front of the create-bosh-director.sh command, this is intentional and will cause the script to be run in the current shell.</p>
+
+<p>The creation of the BOSH Director will take a few minutes, and you will be prompted to enter the passphrase for the generation of a public/private rsa key pair.</p>
 
 <p>In case of any issues see <a href="https://github.com/finkit/bosh-on-gcp/terraform/README.md">bosh-on-gcp create BOSH Director</a> docs.</p>
 
@@ -129,7 +133,7 @@
     <div class="section prepare"><div class="center-column"><div class="view-heading">
   <div class="circle-container">
     <div class="circle-number">
-      <h2>2</h2>
+      <h2>3</h2>
     </div>
   </div>
   <div class="view-heading-text-container">
@@ -146,7 +150,7 @@
   <h4 class="terminal-code-text">$ # export BOSH_CLIENT_SECRET=`bosh int ./creds.yml --path /admin_password`</h4>
 </div>
 
-<p>Running bosh env should return details of the BOSH Director:</p>
+<p>Running bosh env should return details of the BOSH Director, similar to:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh env</h4>
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
@@ -179,8 +183,9 @@ Succeeded</h4>
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/release.html">bosh.io: Release</a></li>
-<li><a href="http://bosh.io/docs/deployment.html">bosh.io: Deployment</a></li>
+  <li><a href="http://bosh.io/docs/release.html">bosh.io: Release</a></li>
+  <li><a href="http://bosh.io/docs/deployment.html">bosh.io: Deployment</a></li>
+</ul>
 </p>
 
 <button onClick="$.fn.fullpage.moveSlideRight();" id="next-button">Next</button>
@@ -198,14 +203,13 @@ Succeeded</h4>
 </div> 
 
 <p>We are going to use a simple BOSH release that deploys an http server.</p>
-
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ git clone https://github.com/finkit/learn-bosh-on-gcp-release</h4>
   <h4 class="terminal-code-text">$ cd learn-bosh-on-gcp-release</h4>
   <h4 class="terminal-code-text">$ bosh create-release</h4>
 </div>
 
-<p>Upload generated release to <b>Director</b>:</p>
+<p>Upload generated release to BOSH Director:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh upload-release</h4>
 </div>
@@ -216,14 +220,15 @@ Succeeded</h4>
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
 
 Name               Version  Commit Hash
-learn-bosh-on-gcp  0+dev.1  fd90933
+learn-bosh-on-gcp  0+dev.1  [your commit hash]
 
 1 releases</h4>
 </div>
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/create-release.html">bosh.io: Creating a Release</a></li>
+  <li><a href="http://bosh.io/docs/create-release.html">bosh.io: Creating a Release</a></li>
+</ul>
 </p>
 </div></div>
     
@@ -240,14 +245,12 @@ learn-bosh-on-gcp  0+dev.1  fd90933
 
 <p>A Stemcell is an operating system image that BOSH uses to create VMs. Official BOSH stemcells are maintained with security updates at <a href="https://bosh.io">bosh.io</a>.</p>
 
-<p>Upload stemcell to <b>Director</b>.</p>
-
+<p>Upload stemcell to BOSH Director:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh upload-stemcell https://s3.amazonaws.com/bosh-core-stemcells/google/bosh-stemcell-3431.10-google-kvm-ubuntu-trusty-go_agent.tgz</h4>
 </div>
 
-  <p>See uploaded stemcells:</p>
-
+<p>Check uploaded stemcells:</p>
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh stemcells</h4>
   <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
@@ -260,8 +263,9 @@ bosh-warden-google-kvm-ubuntu-trusty-go_agent  [your stemcell version]
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/stemcell.html">bosh.io: What is a Stemcell?</a></li>
-<li><a href="http://bosh.io/stemcells">Full list of available stemcells</a></li>
+  <li><a href="http://bosh.io/docs/stemcell.html">bosh.io: What is a Stemcell?</a></li>
+  <li><a href="http://bosh.io/stemcells">bosh.io: Full list of available stemcells</a></li>
+</ul>
 </p>
 </div></div>
     
@@ -272,41 +276,85 @@ bosh-warden-google-kvm-ubuntu-trusty-go_agent  [your stemcell version]
     </div>
   </div>
   <div class="view-heading-text-container">
+    <h2>Update cloud config</h2>
+  </div>
+</div> 
+
+<p>The newly created BOSH Director will not have any cloud config defined:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ bosh cloud-config</h4>
+  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
+
+No cloud config
+
+Exit code 1</h4>
+</div>
+
+<p>Update cloud config on BOSH Director:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ bosh update-cloud-config cloud-config.yml</h4>
+</div>
+
+<p>Check cloud config:</p>
+<div class="terminal-block">
+  <h4 class="terminal-code-text">$ bosh cloud-config</h4>
+  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
+
+azs:
+...
+
+Succeeded</h4>
+</div>
+
+<p>Learn more:
+<ul>
+  <li><a href="http://bosh.io/docs/cloud-config.html">bosh.io: Cloud Config</a></li>
+</ul>
+</p>
+</div></div>
+    
+    <div class="section deploy"><div class="center-column"><div class="view-heading">
+  <div class="circle-container">
+    <div class="circle-number">
+      <h2>4</h2>
+    </div>
+  </div>
+  <div class="view-heading-text-container">
     <h2>And deploy</h2>
   </div>
 </div> 
 
 <p>Run deploy by providing path to deployment manifest. Deployment manifest specifies what services to deploy, their properties and resources configuration.</p>
-
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh -d learn-bosh-on-gcp deploy manifest.yml</h4>
 </div>
 
 <p>See the list of deployed instances as it was specified in manifest:</p>
-
 <div class="terminal-block">
   <h4 class="terminal-code-text">$ bosh instances</h4>
-  <h4 class="terminal-printout-text">...
+  <h4 class="terminal-printout-text">Using environment '10.0.0.6' as client 'admin'
+...
 Deployment 'learn-bosh-on-gcp'
 
-Instance  Process State  AZ  IPs
-app/guid  running        -   10.244.0.2
+Instance                Process State  AZ  IPs
+learn-bosh-on-gcp/guid  running        z1  10.0.0.10
 
 1 instances
-...</h4>
+
+Succeeded</h4>
 </div>
 
 <p>See that our service is up and running.</p>
-
 <div class="terminal-block">
-  <h4 class="terminal-code-text">$ curl static_ip:8080</h4>
-  <h4 class="terminal-printout-text">Hello, Maria from ...</h4>
+  <h4 class="terminal-code-text">$ curl 10.0.0.10:8080</h4>
+  <h4 class="terminal-printout-text">Hello, Anonymous from uuid</h4>
 </div>
 
 <p>Learn more:
 <ul>
-<li><a href="http://bosh.io/docs/deployment-manifest.html">bosh.io: Deployment Manifest Schema</a></li>
-<li><a href="http://bosh.io/docs/deploying-step-by-step.html">bosh.io: Deploying Step-by-step</a></li>
+  <li><a href="http://bosh.io/docs/deployment-manifest.html">bosh.io: Deployment Manifest Schema</a></li>
+  <li><a href="http://bosh.io/docs/deploying-step-by-step.html">bosh.io: Deploying Step-by-step</a></li>
+</ul>
 </p>
 </div></div>
     
