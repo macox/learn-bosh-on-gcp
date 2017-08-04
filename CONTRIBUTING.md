@@ -1,7 +1,7 @@
 # Contributing
 
 We welcome pull requests from everyone. By participating in this project, you
-agree to abide by our simple code of conduct - by nice to people.
+agree to abide by our simple code of conduct - be nice to people.
 
 Fork, then clone the repository:
 
