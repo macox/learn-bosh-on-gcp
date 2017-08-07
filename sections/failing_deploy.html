@@ -16,7 +16,7 @@
   resource_pool: default
   networks:
   - name: default
-    static_ips: [10.244.0.10]</h4>
+    static_ips: [10.0.0.12]</h4>
 </div>
 
 <p>Re-deploy with new job.</p>
@@ -35,6 +35,21 @@
 
 <p>We should find this error: "At least one server must be provided". Router fails to route because there is no servers specified.</p>
 
-<p>Let's add a property to router job to specify our servers pointing to their static IPs and ports ("http://10.244.0.2:8888", "http://10.244.0.6:8888"), re-deploy and see it succeeds.</p>
+<p>Let's add a property to router job to specify our servers pointing to their static IPs and ports.</p>
 
-<p>Now running <b>curl -L http://10.244.0.10:8080</b> should give us responses from different servers.</p>
+<div class="terminal-block">
+  <h4 class="terminal-printout-text">- name: router
+  templates:
+  - name: router
+  instances: 1
+  resource_pool: default
+  networks:
+  - name: default
+    static_ips: [10.0.0.12]
+  properties:
+    servers: "http://10.0.0.10:8888, http://10.0.0.11:8888"</h4>
+</div>
+
+<p>Re-deploy and see it succeeds.</p>
+
+<p>Now running <b>curl -L http://10.0.0.10:8888</b> should give us responses from different servers.</p>
